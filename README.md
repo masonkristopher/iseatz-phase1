@@ -1,1 +1,1 @@
-# iseatz-phase1
+# iSeatz - Phase 1
