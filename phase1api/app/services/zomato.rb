@@ -7,7 +7,7 @@ require 'dotenv'
 module Zomato
   # Make GET requests to Zomato API - get cuisines by city
   class Cuisines
-    def self.by_city(city)
+    def self.by_city(city, key)
 
       conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/cities') do |faraday|
         faraday.adapter Faraday.default_adapter
@@ -17,11 +17,11 @@ module Zomato
       response = conn.get do |req|
         req.params['q'] = city
         req.headers['Content-Type'] = 'application/json'
-        req.headers['user-key'] = ENV['API_KEY']
+        req.headers['user-key'] = key
       end
 
-      puts response.body
-      return response.body
+      # puts response.body
+      response.body
     end
   end
 end

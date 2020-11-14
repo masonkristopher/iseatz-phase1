@@ -3,6 +3,8 @@
 # Get list of cuisines by city
 class CuisinesController < ApplicationController
   def index
-    @response = Zomato::Cuisines.by_city(params['city']) if params['city']
+    api_key = request.headers['api-key']
+    @response = Zomato::Cuisines.by_city(params['city'], api_key) if params['city']
+    render :json => @response
   end
 end
