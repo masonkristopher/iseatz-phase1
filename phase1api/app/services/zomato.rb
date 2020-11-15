@@ -14,12 +14,15 @@ module Zomato
       # create new hash to store city info and list of cuisines
       response = Hash.new
 
-      # get locations from Zomato
-      conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/cities') do |faraday|
-        faraday.response :json
+      # set Zomato API connection
+      conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/') do |conn|
+        # use Faraday middleware to parse responses
+        conn.response :json, :content_type => /\bjson$/
+        conn.adapter Faraday.default_adapter
       end
 
-      cities_response = conn.get do |req|
+      # get city info
+      cities_response = conn.get('cities') do |req|
         req.params['q'] = city
         req.headers['user-key'] = key
       end
@@ -29,12 +32,8 @@ module Zomato
       response['city_info'] = city
       city_id = city['id']
 
-      # get cuisines by city from Zomato
-      conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/cuisines') do |faraday|
-        faraday.response :json
-      end
-
-      cuisines_response = conn.get do |req|
+      # get cuisines by city
+      cuisines_response = conn.get('cuisines') do |req|
         req.params['city_id'] = city_id
         req.headers['user-key'] = key
       end
