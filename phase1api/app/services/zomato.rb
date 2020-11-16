@@ -8,16 +8,15 @@ module Zomato
   # Make GET requests to Zomato API - get cuisines by city
   class Cuisines
     def self.by_city(city, key)
-
-      puts 'Finding list of cuisines for ' + city
+      puts "Getting list of cuisines in #{city}"
 
       # create new hash to store city info and list of cuisines
-      response = Hash.new
+      response = {}
 
       # set Zomato API connection
       conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/') do |conn|
         # use Faraday middleware to parse responses
-        conn.response :json, :content_type => /\bjson$/
+        conn.response :json, content_type: /\bjson$/
         conn.adapter Faraday.default_adapter
       end
 
@@ -43,6 +42,40 @@ module Zomato
 
       # return response hash
       response
+    end
+  end
+
+  # Make GET requests to Zomato API - get menus for cuisines by city
+  class Menus
+    def self.by_city_and_cuisine(city, cuisine, key)
+
+      "Getting menus for first 3 #{cuisine} restaurants in #{city}"
+
+      set Zomato API connection
+       conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/') do |conn|
+        # use Faraday middleware to parse responses
+        conn.response :json, content_type: /\bjson$/
+        conn.adapter Faraday.default_adapter
+      end
+
+      # get cuisines by city
+      cuisines_response = conn.get('cuisines') do |req|
+        req.params['city_id'] = city_id
+        req.headers['user-key'] = key
+      end
+
+      # find cuisine and save id
+
+      # get entity (location) id
+      cities_response = conn.get('cities') do |req|
+        req.params['q'] = city
+        req.headers['user-key'] = key
+      end
+
+      # get 3 restaurants
+
+      # get menus
+
     end
   end
 end

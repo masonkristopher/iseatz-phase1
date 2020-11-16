@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Get list of cuisines by city
+# get list of cuisines by city
 class CuisinesController < ApplicationController
   def index
     api_key = request.headers['api-key']
