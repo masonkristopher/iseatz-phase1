@@ -28,8 +28,8 @@ module Zomato
 
       # parse city info
       city = cities_response.body['location_suggestions'][0]
-      response['city_info'] = city
-      city_id = city['id']
+      response[:city_info] = city
+      city_id = city[:id]
 
       # get cuisines by city
       cuisines_response = conn.get('cuisines') do |req|
@@ -38,7 +38,7 @@ module Zomato
       end
 
       # add cuisines to response hash
-      response['cuisines'] = cuisines_response.body['cuisines']
+      response[:cuisines] = cuisines_response.body['cuisines']
 
       # return response hash
       response
@@ -51,8 +51,8 @@ module Zomato
 
       "Getting menus for first 3 #{cuisine} restaurants in #{city}"
 
-      set Zomato API connection
-       conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/') do |conn|
+      # set Zomato API connection
+      conn = Faraday.new(url: 'https://developers.zomato.com/api/v2.1/') do |conn|
         # use Faraday middleware to parse responses
         conn.response :json, content_type: /\bjson$/
         conn.adapter Faraday.default_adapter
