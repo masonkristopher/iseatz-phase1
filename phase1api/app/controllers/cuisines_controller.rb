@@ -4,9 +4,18 @@
 class CuisinesController < ApplicationController
   def index
     api_key = request.headers['api-key']
-    @response = Zomato::Cuisines.by_city(params['city'], api_key) if params['city']
 
-    # send response hash in json
+    if !api_key && !params['city']
+      return render :json => 'Missing city and API key', :status => 400
+    elsif !api_key
+      return render :json => 'Missing API key', :status => 400
+    elsif !params['city']
+      return render :json => 'Missing city', :status => 400
+    end
+
+    @response = Cuisine.by_city(params['city'], api_key)
     render :json => @response
+
+
   end
 end
