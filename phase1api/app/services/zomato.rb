@@ -1,58 +1,68 @@
 # frozen_string_literal: true
 
-require 'faraday'
-require 'faraday_middleware'
-
 module Zomato
-  class API
-    def self.connection
-      Faraday.new(url: 'https://developers.zomato.com/api/v2.1/') do |conn|
-        # use Faraday middleware to parse responses
-        conn.response :json, content_type: /\bjson$/
-        conn.adapter Faraday.default_adapter
+  # API wrapper for Zomato API
+  class Client
+
+    API_ENDPOINT = 'https://developers.zomato.com/api/v2.1'
+
+    attr_reader :user_key
+
+    def initialize(user_key = nil)
+      @user_key = user_key
+    end
+
+    def cities(city_string)
+      request(
+        http_method: :get,
+        endpoint: 'cities',
+        params: { 'q' => city_string }
+      )
+    end
+
+    def cuisines(city_id)
+      request(
+        http_method: :get,
+        endpoint: 'cuisines',
+        params: { 'city_id' => city_id }
+      )
+    end
+
+    def search(city_id, cuisines_id)
+      request(
+        http_method: :get,
+        endpoint: 'search',
+        params: {
+          'cuisines' => cuisines_id,
+          'entity_id' => city_id,
+          'entity_type' => 'city'
+        }
+      )
+    end
+
+    def reviews(restaurant_id)
+      request(
+        http_method: :get,
+        endpoint: 'reviews',
+        params: { 'res_id' => restaurant_id }
+      )
+    end
+
+    private
+
+    def client
+      @client ||= Faraday.new(API_ENDPOINT) do |client|
+        client.adapter Faraday.default_adapter
+        client.headers['user-key'] = user_key if user_key.present?
       end
     end
-  end
 
-  class Cities
-    def self.get_all(city, key)
-      conn = API.connection
-      conn.get('cities') do |req|
-        req.params['q'] = city
-        req.headers['user-key'] = key
-      end
-    end
-  end
+    def request(http_method:, endpoint:, params: {})
+      response = client.public_send(http_method, endpoint, params)
+      parsed_response = Oj.load(response.body)
 
-  class Cuisines
-    def self.get_all(city_id, key)
-      conn = API.connection
-      conn.get('cuisines') do |req|
-        req.params['city_id'] = city_id
-        req.headers['user-key'] = key
-      end
-    end
-  end
-
-  class Search
-    def self.by_city_and_cuisine(city_id, cuisines_id, key)
-      conn = API.connection
-      conn.get('search') do |req|
-        req.params['cuisines'] = cuisines_id
-        req.params['entity_id'] = city_id
-        req.params['entity_type'] = 'city'
-        req.headers['user-key'] = key
-      end
-    end
-  end
-
-  class Reviews
-    def self.by_restaurant(restaurant_id, key)
-      conn = API.connection
-      conn.get('reviews') do |req|
-        req.params['res_id'] = restaurant_id
-        req.headers['user-key'] = key
-      end
+      return parsed_response if response.status == 200
+      return response
     end
   end
 end
