@@ -1,4 +1,4 @@
-class Review < ApplicationJob
+class Review
   # get top 3 restaurants in a city, by city id and cuisine
   # includes latest 5 reviews for each restaurant
   def self.by_city_and_cuisine(city_id, cuisine_id, key)

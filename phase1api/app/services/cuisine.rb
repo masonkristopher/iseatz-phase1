@@ -1,7 +1,5 @@
-# require '../apis/zomato/client'
-
-class Cuisine < ApplicationJob
-  # get city info and cuisines in that city
+class Cuisine
+  # get info and list of cuisines by city
   def self.by_city(city, key)
     # make requests to Zomato API
     zomato_client = Zomato::Client.new(key)
