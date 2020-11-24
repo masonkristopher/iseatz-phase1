@@ -1,10 +1,13 @@
+# require '../apis/zomato/client'
+
 class Cuisine < ApplicationJob
   # get city info and cuisines in that city
   def self.by_city(city, key)
     # make requests to Zomato API
-    cities_response = Zomato::Cities.get_all(city, key)
-    city = cities_response.body['location_suggestions'][0]
-    cuisines_response = Zomato::Cuisines.get_all(city['id'], key)
+    zomato_client = Zomato::Client.new(key)
+    cities_response = zomato_client.cities(city)
+    city = cities_response['location_suggestions'][0]
+    cuisines_response = zomato_client.cuisines(city['id'])
 
     # parse response data into response hash
     response = {}
@@ -15,7 +18,7 @@ class Cuisine < ApplicationJob
       :state_code => city['state_code'],
       :country => city['country_name'],
     }
-    response['cuisines'] = cuisines_response.body['cuisines']
+    response['cuisines'] = cuisines_response['cuisines']
       .map{|item| item['cuisine']['cuisine_name']}
     response
   end
