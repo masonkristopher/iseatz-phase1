@@ -38,6 +38,7 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # HTTP Requests
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'oj'
 
 # Linting & Syntax Highlighting
 gem 'rubocop'

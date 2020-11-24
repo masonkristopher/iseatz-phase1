@@ -98,6 +98,7 @@ GEM
     nio4r (2.5.4)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    oj (3.10.16)
     parallel (1.20.0)
     parser (2.7.2.0)
       ast (~> 2.4.1)
@@ -189,6 +190,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   listen (~> 3.2)
+  oj
   puma (~> 4.1)
   rack-cors
   rails (~> 6.0.3, >= 6.0.3.4)
