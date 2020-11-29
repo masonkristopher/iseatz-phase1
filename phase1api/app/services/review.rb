@@ -1,25 +1,25 @@
+# frozen_string_literal: true
+
 class Review
   # get top 3 restaurants in a city, by city id and cuisine
   # includes latest 5 reviews for each restaurant
   def self.by_city_and_cuisine(city_id, cuisine_id, key)
-
     zomato_client = Zomato::Client.new(key)
     search_response = zomato_client.search(city_id, cuisine_id)
 
     # check for no results from search
-    if search_response['results_found'] < 1
-      return 404
-    end
+    return 404 if search_response['results_found'] < 1
 
     # build response array with first 5 restaurants
-    response = search_response['restaurants'].take(5).map do |x| {
-      # extract restaurant info
-      :name => x['restaurant']['name'],
-      :id => x['restaurant']['id'],
-      :address => x['restaurant']['location']['address'],
-      :location => x['restaurant']['location']['locality_verbose'],
-      :city_id => x['restaurant']['location']['city_id'],
-    }
+    response = search_response['restaurants'].take(5).map do |x|
+      {
+        # extract restaurant info
+        name: x['restaurant']['name'],
+        id: x['restaurant']['id'],
+        address: x['restaurant']['location']['address'],
+        location: x['restaurant']['location']['locality_verbose'],
+        city_id: x['restaurant']['location']['city_id']
+      }
     end
 
     # get reviews for each restaurant

@@ -3,7 +3,6 @@
 module Zomato
   # API wrapper for Zomato API
   class Client
-
     API_ENDPOINT = 'https://developers.zomato.com/api/v2.1'
 
     attr_reader :user_key
@@ -62,7 +61,8 @@ module Zomato
       parsed_response = Oj.load(response.body)
 
       return parsed_response if response.status == 200
-      return response
+
+      response
     end
   end
 end
