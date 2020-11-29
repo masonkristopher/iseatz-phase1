@@ -18,18 +18,20 @@ RSpec.configure do |config|
     'v1/swagger.yaml' => {
       openapi: '3.0.1',
       info: {
-        title: 'API V1',
-        version: 'v1'
+        title: 'iSeatz Phase 1: Zomato API',
+        version: 'v1',
+        description: 'Get city and restaurant data from Zomato\'s open API.'
       },
       paths: {},
       servers: [
         {
-          url: 'https://{defaultHost}',
-          variables: {
-            defaultHost: {
-              default: 'www.example.com'
-            }
-          }
+          url: 'http://localhost:3000/',
+          # url: 'http://{defaultHost}/',
+          # variables: {
+          #   defaultHost: {
+          #     default: 'localhost:3000'
+          #   }
+          # }
         }
       ]
     }

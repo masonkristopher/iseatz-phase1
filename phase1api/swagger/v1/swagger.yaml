@@ -1,0 +1,134 @@
+---
+openapi: 3.0.1
+info:
+  title: 'iSeatz Phase 1: Zomato API'
+  version: v1
+  description: Get city and restaurant data from Zomato's open API.
+paths:
+  "/api/cuisines/?city={city}":
+    get:
+      summary: City Info and Cuisines List
+      tags:
+      - Cuisines
+      parameters:
+      - name: api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: city
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: City and cuisines found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  state:
+                    type: string
+                  state_code:
+                    type: string
+                  country:
+                    type: string
+                  total_cuisines:
+                    type: integer
+                  cuisines:
+                    type: array
+                    items:
+                      properties:
+                        name:
+                          type: string
+                        id:
+                          type: integer
+        '404':
+          description: No match found for city
+          content: {}
+  "/api/reviews/?city_id={city_id}&cuisine_id={cuisine_id}":
+    get:
+      summary: Top 5 Restarants and Recent Reviews
+      tags:
+      - Reviews
+      parameters:
+      - name: api-key
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: city_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: cuisine_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: City and reviews found
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: string
+                    address:
+                      type: string
+                    location:
+                      type: string
+                    city_id:
+                      type: integer
+                    reviews:
+                      type: array
+                      items:
+                        properties:
+                          rating:
+                            type: integer
+                          review_text:
+                            type: string
+                          id:
+                            type: string
+                          rating_color:
+                            type: string
+                          review_time_friendly:
+                            type: string
+                          rating_text:
+                            type: string
+                          timestamp:
+                            type: string
+                          likes:
+                            type: integer
+                          user:
+                            type: object
+                            properties:
+                              name:
+                                type: string
+                              foodie_color:
+                                type: string
+                              profile_url:
+                                type: string
+                              profile_image:
+                                type: string
+                              profile_deeplink:
+                                type: string
+                          comments_count:
+                            type: integer
+        '404':
+          description: No match found for city/cuisine
+          content: {}
+servers:
+- url: http://localhost:3000/
