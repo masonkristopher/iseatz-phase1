@@ -23,12 +23,10 @@ rails -v
 
 ## Install Dependencies
 
-This API uses [Faraday](https://lostisland.github.io/faraday/) and [Faraday Middleware](https://github.com/lostisland/faraday_middleware) to create and parse HTTP requests.
-
-Install gems with the `bundle` command:
+Install gems with the `bundle install` command:
 
 ```bash
-bundle
+bundle install
 ```
 ## Run Locally
 
@@ -38,12 +36,20 @@ rails server
 ```
 
 ## Documentation
+This API uses [Rswag](https://github.com/rswag/rswag) to test and document endpoints. For more detailed API documentation, response schemas, and to test the API in the browser, run the server locally and open `http://localhost:3000/api-docs/`.
 
+### API Overview
+- **Endpoint 1:** /api/cuisines/?city={city}
+  - Takes two params: city string (in path) and personal API key (in headers).
+  - Returns object with city info and list of cuisines in that city.
+- **Endpoint 2:** /api/reviews/?city_id={city_id}&cuisine_id={cuisine_id}
+  - Takes three params: city id and cuisine id (in path) and personal API key (in headers).
+  - Returns array of top 5 restaurant objects in that city, each object containing restaurant information and array of most recent 5 review objects.
 
 ## Linting
 This API uses [Rubocop](https://rubocop.org/) as a code linter and formatter.
 
-To check code style in the entire directory, run:
+To check format and style in the entire directory, run:
 ```bash
 rubocop
 ```
@@ -52,5 +58,3 @@ Lint specific files or directories:
 rubocop app/controllers app/models app/services/zomato.rb
 ```
 Rubocop can also autocorrect while linting with the `-a` flag (safe mode) or `-A` (safe and unsafe). Find out more in [Rubocop Basic Usage](https://docs.rubocop.org/rubocop/1.3/usage/basic_usage.html).
-
-## Testing
