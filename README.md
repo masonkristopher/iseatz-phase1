@@ -15,41 +15,47 @@ This API requires both **Ruby** and **Ruby on Rails** to be installed locally. F
 - Ruby 2.7.2 - https://www.ruby-lang.org/en/documentation/installation/
 - Rails 6.0.3.4 - http://installrails.com/
 
-Verify the installed versions:
-```bash
-ruby -v
-rails -v
-```
 
-## Install Dependencies
-- [Faraday](https://lostisland.github.io/faraday/), [Faraday Middleware](https://github.com/lostisland/faraday_middleware) for handling HTTP requests
-- [Optimized JSON](http://www.ohler.com/oj/) for fast JSON parsing
-- [Rswag](https://github.com/rswag/rswag) for API documentation
-- [Rubocop](https://rubocop.org/) for linting
+## Run Server Locally
+  1. Navigate to root directory, `phase1api`
 
-Change into `phase1api` and install gems with the `bundle install` command:
+  2. Install dependency gems:
+  ```
+  bundle install
+  ```
 
-```bash
-cd phase1api
-bundle install
-```
-## Run Locally
+  3. Start the server on `localhost:3000`:
+  ```
+  rails server
+  ```
 
-Start the server on `localhost:3000`:
-```bash
-rails server
-```
+  4. Once server is running, open API docs at http://localhost:3000/api-docs/
+
+  5. Make API requests to http://localhost:3000/api/ through cURL, Postman, or in browser via Swagger
+
 
 ## Documentation
-This API uses [Rswag](https://github.com/rswag/rswag) to test and document endpoints. For more detailed API documentation, response schemas, and to test the API in the browser, run the server locally and open http://localhost:3000/api-docs/.
+This API uses [Rswag](https://github.com/rswag/rswag) to document endpoints. For more detailed API documentation, response schemas, and to test the API in the browser, run the server locally and open http://localhost:3000/api-docs/.
 
-### API Overview
+*Please note that a personal API key must be included in the request header as `api-key`.*
+
+
+## API Overview
 - **Endpoint 1:** /api/cuisines/?city={city}
   - Takes two params: city string (in path) and personal API key (in headers).
   - Returns an object with city info and list of cuisines in that city.
 - **Endpoint 2:** /api/reviews/?city_id={city_id}&cuisine_id={cuisine_id}
   - Takes three params: city id and cuisine id (in path) and personal API key (in headers).
   - Returns an array of top 5 restaurants in that city, each object containing restaurant information and an array of most recent 5 review objects.
+
+
+## Dependencies
+In addition to the standard Ruby on Rails Gemfile, this API makes use of:
+- [Faraday](https://lostisland.github.io/faraday/) & [Faraday Middleware](https://github.com/lostisland/faraday_middleware) for handling HTTP requests
+- [Optimized JSON](http://www.ohler.com/oj/) for fast JSON parsing
+- [Rswag](https://github.com/rswag/rswag) for API documentation
+- [Rubocop](https://rubocop.org/) for linting
+
 
 ## Linting
 This API uses [Rubocop](https://rubocop.org/) as a code linter and formatter.
