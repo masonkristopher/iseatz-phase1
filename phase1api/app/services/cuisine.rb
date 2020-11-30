@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Cuisine methods
 class Cuisine
   # get info and list of cuisines by city
   def self.by_city(city, key)
@@ -24,11 +25,11 @@ class Cuisine
 
     # add cuisines to response hash
     if cuisines_response['cuisines'].empty?
+      response['total_cuisines'] = 0
       response['cuisines'] = []
     else
       response['total_cuisines'] = cuisines_response['cuisines'].length
-      response['cuisines'] = cuisines_response['cuisines']
-                             .map do |item|
+      response['cuisines'] = cuisines_response['cuisines'].map do |item|
         {
           name: item['cuisine']['cuisine_name'],
           id: item['cuisine']['cuisine_id']

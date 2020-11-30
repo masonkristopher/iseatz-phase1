@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+# Review methods
 class Review
-  # get top 3 restaurants in a city, by city id and cuisine
+  # get first 5 restaurants in a city, by city id and cuisine
   # includes latest 5 reviews for each restaurant
   def self.by_city_and_cuisine(city_id, cuisine_id, key)
     zomato_client = Zomato::Client.new(key)

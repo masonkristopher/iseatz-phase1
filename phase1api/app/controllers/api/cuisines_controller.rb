@@ -7,9 +7,8 @@ module Api
     def index
       api_key = request.headers['api-key']
 
-      return render json: 'Missing city query and API key', status: 400 if !api_key && !params['city']
-      return render json: 'Missing API key', status: 401 if !api_key
-      return render json: 'Missing city query', status: 400 if !params['city']
+      return render json: 'Missing API key', status: 401 unless api_key
+      return render json: 'Missing city query', status: 400 unless params['city']
 
       response = Cuisine.by_city(params['city'], api_key)
 
