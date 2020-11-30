@@ -5,12 +5,12 @@ describe 'Cuisines' do
   path '/api/cuisines/?city={city}' do
 
     get 'City Info and Cuisines List' do
-      tags 'Cuisines'
+      tags 'Endpoint 1 - Cuisines'
       produces 'application/json'
       parameter name: 'api-key', in: :header, type: :string, required: true
       parameter name: :city, in: :path, type: :string, required: true
 
-      response '200', 'City and cuisines found' do
+      response '200', 'City info and list of cuisines found' do
         schema type: :object,
           properties: {
             id: { type: :integer },

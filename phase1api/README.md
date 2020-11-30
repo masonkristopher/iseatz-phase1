@@ -23,6 +23,11 @@ rails -v
 
 ## Install Dependencies
 
+- [Faraday](https://lostisland.github.io/faraday/), [Faraday Middleware](https://github.com/lostisland/faraday_middleware) for handling HTTP requests
+- [Optimized JSON](http://www.ohler.com/oj/) for fast JSON parsing
+- [Rswag](https://github.com/rswag/rswag) for API documentation
+- [Rubocop](https://rubocop.org/) for linting
+
 Install gems with the `bundle install` command:
 
 ```bash
@@ -36,15 +41,15 @@ rails server
 ```
 
 ## Documentation
-This API uses [Rswag](https://github.com/rswag/rswag) to test and document endpoints. For more detailed API documentation, response schemas, and to test the API in the browser, run the server locally and open `http://localhost:3000/api-docs/`.
+This API uses [Rswag](https://github.com/rswag/rswag) to document endpoints. For more detailed API documentation, response schemas, and to test the API in the browser, run the server locally and open http://localhost:3000/api-docs/.
 
 ### API Overview
 - **Endpoint 1:** /api/cuisines/?city={city}
   - Takes two params: city string (in path) and personal API key (in headers).
-  - Returns object with city info and list of cuisines in that city.
+  - Returns an object with city info and list of cuisines in that city.
 - **Endpoint 2:** /api/reviews/?city_id={city_id}&cuisine_id={cuisine_id}
   - Takes three params: city id and cuisine id (in path) and personal API key (in headers).
-  - Returns array of top 5 restaurant objects in that city, each object containing restaurant information and array of most recent 5 review objects.
+  - Returns an array of top 5 restaurants in that city, each object containing restaurant information and an array of most recent 5 review objects.
 
 ## Linting
 This API uses [Rubocop](https://rubocop.org/) as a code linter and formatter.
@@ -57,4 +62,4 @@ Lint specific files or directories:
 ```bash
 rubocop app/controllers app/models app/services/zomato.rb
 ```
-Rubocop can also autocorrect while linting with the `-a` flag (safe mode) or `-A` (safe and unsafe). Find out more in [Rubocop Basic Usage](https://docs.rubocop.org/rubocop/1.3/usage/basic_usage.html).
+Autocorrect while linting with the `-a` flag (safe mode) or `-A` (safe and unsafe). Find out more in [Rubocop Basic Usage](https://docs.rubocop.org/rubocop/1.3/usage/basic_usage.html).

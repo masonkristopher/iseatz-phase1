@@ -9,7 +9,7 @@ paths:
     get:
       summary: City Info and Cuisines List
       tags:
-      - Cuisines
+      - Endpoint 1 - Cuisines
       parameters:
       - name: api-key
         in: header
@@ -23,7 +23,7 @@ paths:
           type: string
       responses:
         '200':
-          description: City and cuisines found
+          description: City info and list of cuisines found
           content:
             application/json:
               schema:
@@ -56,7 +56,7 @@ paths:
     get:
       summary: Top 5 Restarants and Recent Reviews
       tags:
-      - Reviews
+      - Endpoint 2 - Reviews
       parameters:
       - name: api-key
         in: header
@@ -75,7 +75,8 @@ paths:
           type: string
       responses:
         '200':
-          description: City and reviews found
+          description: Array of 5 restaurants' info, including latest reviews found
+            by city and cuisine input
           content:
             application/json:
               schema:

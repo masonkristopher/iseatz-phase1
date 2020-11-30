@@ -5,13 +5,13 @@ describe 'Reviews' do
   path '/api/reviews/?city_id={city_id}&cuisine_id={cuisine_id}' do
 
     get 'Top 5 Restarants and Recent Reviews' do
-      tags 'Reviews'
+      tags 'Endpoint 2 - Reviews'
       produces 'application/json'
       parameter name: 'api-key', in: :header, type: :string, required: true
       parameter name: :city_id, in: :path, type: :string, required: true
       parameter name: :cuisine_id, in: :path, type: :string, required: true
 
-      response '200', 'City and reviews found' do
+      response '200', 'Array of 5 restaurants\' info, including latest reviews found by city and cuisine input' do
         schema type: :array,
           items: {
             properties: {
@@ -51,7 +51,8 @@ describe 'Reviews' do
       end
 
       response '404', 'No match found for city/cuisine' do
-        let(:city) { 'invalid' }
+        let(:city_id) { 'invalid' }
+        let(:cuisine_id) { 'invalid' }
         run_test!
       end
 
