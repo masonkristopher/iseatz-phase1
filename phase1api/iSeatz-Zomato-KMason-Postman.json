@@ -1,0 +1,84 @@
+{
+	"info": {
+		"_postman_id": "a96f13d3-ce11-4aaf-a90e-5655b9366c46",
+		"name": "Zomato/iSeatz",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "ENDPOINT 1: Cuisines",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "api-key",
+						"type": "text",
+						"value": "add your personal API key"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/cuisines?city=New Orleans",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"cuisines"
+					],
+					"query": [
+						{
+							"key": "city",
+							"value": "New Orleans"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ENDPOINT 2: Reviews",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "api-key",
+						"value": "add your personal API key",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://127.0.0.1:3000/api/reviews?city_id=29000&cuisine_id=193",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviews"
+					],
+					"query": [
+						{
+							"key": "city_id",
+							"value": "290"
+						},
+						{
+							"key": "cuisine_id",
+							"value": "193"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
